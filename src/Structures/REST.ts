@@ -56,12 +56,16 @@ export class REST {
 
 	public loadTracks(options: { source?: LavalinkSource; query: string } | string) {
 		if (typeof options === 'string') {
-			return this.get<LoadTrackResponse>(`loadtracks?identifier=${this.resolveIdentifier(LavalinkSourceEnum.Youtube)}:${options}`);
+			return this.get<LoadTrackResponse>(
+				`loadtracks?identifier=${encodeURIComponent(`${this.resolveIdentifier(LavalinkSourceEnum.Youtube)}:${options}`)}`
+			);
 		}
 		const source = options.source ?? LavalinkSourceEnum.Youtube;
 		const { query } = options;
 		return this.get<LoadTrackResponse>(
-			`loadtracks?identifier=${this.isUrl(options.query) ? query : `${this.resolveIdentifier(source)}:${query}`}`
+			`loadtracks?identifier=${
+				this.isUrl(options.query) ? encodeURIComponent(query) : `${encodeURIComponent(`${this.resolveIdentifier(source)}:${query}`)}`
+			}`
 		);
 	}
 
