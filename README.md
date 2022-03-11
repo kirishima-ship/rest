@@ -2,10 +2,23 @@
 
 ![Kirishima Banner](https://cdn.discordapp.com/attachments/891939988088975372/931079377771450388/kirishima-ship-banner.png)
 
-# @kirishima/template
+# @kirishima/rest
 
 </div>
 
+
 # Features
-- lorem
-- ipsum
+- Written in TypeScript
+- Support ESM & CommonJS
+
+# Example 
+```ts
+import { REST } from "@kirishima/rest";
+
+(async () => {
+    const lavalinkRest = new REST("http://lava.link:80")
+    .setAuthorization("youshallnotpass")
+
+    const tracks = await lavalinkSocket.loadTracks("never gonna give you up");
+    console.log(tracks);
+})()
