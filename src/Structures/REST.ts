@@ -57,7 +57,11 @@ export class REST {
 	public loadTracks(options: { source?: LavalinkSource; query: string } | string) {
 		if (typeof options === 'string') {
 			return this.get<LoadTrackResponse>(
-				`loadtracks?identifier=${encodeURIComponent(`${this.resolveIdentifier(LavalinkSourceEnum.Youtube)}:${options}`)}`
+				`loadtracks?identifier=${
+					this.isUrl(options)
+						? encodeURIComponent(options)
+						: encodeURIComponent(`${this.resolveIdentifier(LavalinkSourceEnum.Youtube)}:${options}`)
+				}`
 			);
 		}
 		const source = options.source ?? LavalinkSourceEnum.Youtube;
