@@ -45,6 +45,6 @@
   "dependencies": {
     "@kirishima/fetch": "0.2.1",
     "lavalink-api-types": "0.1.9",
-    "undici": "4.15.1"
+    "undici": "4.16.0"
   }
 }
