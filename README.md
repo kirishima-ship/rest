@@ -19,6 +19,6 @@ import { REST } from "@kirishima/rest";
     const lavalinkRest = new REST("http://lava.link:80")
     .setAuthorization("youshallnotpass")
 
-    const tracks = await lavalinkSocket.lavalinkRest("never gonna give you up");
+    const tracks = await lavalinkRest.loadTracks("never gonna give you up");
     console.log(tracks);
 })()
