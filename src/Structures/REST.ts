@@ -1,13 +1,9 @@
-import {
-	LavalinkSource,
-	LavalinkSourceEnum,
-	LoadTrackResponse,
-	LavalinkSearchIdentifierEnum,
-	LavalinkTrack,
-	RoutePlannerStatusResponse
-} from 'lavalink-api-types';
 import { fetch, FetchResultTypes } from '@kirishima/fetch';
 import { AsyncQueue } from '@sapphire/async-queue';
+import { Routes } from 'lavalink-api-types/dist/routes';
+import type { RoutePlannerStatusResponse, LoadTrackResponse, LavalinkTrack } from 'lavalink-api-types/dist';
+import { LavalinkSourceEnum, LavalinkSearchIdentifierEnum } from 'lavalink-api-types/dist/enums';
+import type { LavalinkSource } from 'lavalink-api-types/dist/types';
 import type { RequestInit } from 'undici';
 
 export class REST {
@@ -16,13 +12,13 @@ export class REST {
 
 	public routeplanner = {
 		freeAddress: async (address: string): Promise<void> => {
-			await this.post<string>('routeplanner/free/address', { body: JSON.stringify({ address }) });
+			await this.post<string>(Routes.routePlannerFreeAddress(), { body: JSON.stringify({ address }) });
 		},
 		freeAllAddress: async (): Promise<void> => {
-			await this.post<string>('routeplanner/free/all');
+			await this.post<string>(Routes.routePlannerFreeAll());
 		},
 		status: async (): Promise<RoutePlannerStatusResponse> => {
-			return this.get<RoutePlannerStatusResponse>('routeplanner/status');
+			return this.get<RoutePlannerStatusResponse>(Routes.routePlannerStatus());
 		}
 	};
 
@@ -57,48 +53,48 @@ export class REST {
 	public loadTracks(options: { source?: LavalinkSource; query: string } | string) {
 		if (typeof options === 'string') {
 			return this.get<LoadTrackResponse>(
-				`loadtracks?identifier=${
+				Routes.loadTracks(
 					this.isUrl(options)
 						? encodeURIComponent(options)
 						: encodeURIComponent(`${this.resolveIdentifier(LavalinkSourceEnum.Youtube)}:${options}`)
-				}`
+				)
 			);
 		}
 		const source = options.source ?? LavalinkSourceEnum.Youtube;
 		const { query } = options;
 		return this.get<LoadTrackResponse>(
-			`loadtracks?identifier=${
+			Routes.loadTracks(
 				this.isUrl(options.query) ? encodeURIComponent(query) : `${encodeURIComponent(`${this.resolveIdentifier(source)}:${query}`)}`
-			}`
+			)
 		);
 	}
 
 	public decodeTracks(trackOrTracks: LavalinkTrack['track'][] | LavalinkTrack['track']) {
 		if (Array.isArray(trackOrTracks)) {
-			return this.post<LavalinkTrack[]>('decodetracks', {
+			return this.post<LavalinkTrack[]>(Routes.decodeTracks(), {
 				body: JSON.stringify(trackOrTracks),
 				headers: { ...this.headers, 'Content-Type': 'application/json' }
 			});
 		}
-		return this.post<LavalinkTrack[]>('decodetracks', {
+		return this.post<LavalinkTrack[]>(Routes.decodeTracks(), {
 			body: JSON.stringify([trackOrTracks]),
 			headers: { ...this.headers, 'Content-Type': 'application/json' }
 		});
 	}
 
-	private async get<T>(route: string, init?: RequestInit | undefined): Promise<T> {
+	public async get<T>(route: string, init?: RequestInit | undefined): Promise<T> {
 		await this.queue.wait();
 		try {
-			return fetch(`${this.url}/${route}`, { headers: this.headers, ...init }, FetchResultTypes.JSON);
+			return fetch(`${this.url}${route}`, { headers: this.headers, ...init }, FetchResultTypes.JSON);
 		} finally {
 			this.queue.shift();
 		}
 	}
 
-	private async post<T>(route: string, init?: RequestInit | undefined): Promise<T> {
+	public async post<T>(route: string, init?: RequestInit | undefined): Promise<T> {
 		await this.queue.wait();
 		try {
-			return fetch(`${this.url}/${route}`, { headers: this.headers, method: 'POST', ...init }, FetchResultTypes.JSON);
+			return fetch(`${this.url}${route}`, { headers: this.headers, method: 'POST', ...init }, FetchResultTypes.JSON);
 		} finally {
 			this.queue.shift();
 		}
