@@ -1,9 +1,9 @@
 import { fetch, FetchResultTypes } from '@kirishima/fetch';
 import { AsyncQueue } from '@sapphire/async-queue';
-import { Routes } from 'lavalink-api-types/dist/routes';
-import type { RoutePlannerStatusResponse, LoadTrackResponse, LavalinkTrack } from 'lavalink-api-types/dist';
-import { LavalinkSourceEnum, LavalinkSearchIdentifierEnum } from 'lavalink-api-types/dist/enums';
-import type { LavalinkSource } from 'lavalink-api-types/dist/types';
+import { Routes } from 'lavalink-api-types';
+import type { RoutePlannerStatusResponse, LoadTrackResponse, LavalinkTrack } from 'lavalink-api-types';
+import { LavalinkSourceEnum, LavalinkSearchIdentifierEnum } from 'lavalink-api-types';
+import type { LavalinkSource } from 'lavalink-api-types';
 import type { RequestInit } from 'undici';
 
 export class REST {

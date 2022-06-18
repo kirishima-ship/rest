@@ -1,5 +1,5 @@
 import { REST } from "../src/index";
-import { LoadTypeEnum } from "lavalink-api-types/dist/enums/index";
+import { LoadTypeEnum } from "lavalink-api-types";
 
 const rest = new REST("https://lavalink.oops.wtf:443", { Authorization: "www.freelavalink.ga" });
 
@@ -11,8 +11,8 @@ test("Test for load tracks", async () => {
     expect(loadType).toBe(LoadTypeEnum.SEARCH_RESULT)
 })
 
-test("Test for decde tracks", async () => {
-    const { tracks, loadType } = await rest.loadTracks("Never Gonna Give You Up");
+test("Test for decode tracks", async () => {
+    const { tracks } = await rest.loadTracks("Never Gonna Give You Up");
     const decodedTracks = await rest.decodeTracks(tracks.map(x => x.track));
     expect(decodedTracks.length).toEqual(tracks.length);
 })
