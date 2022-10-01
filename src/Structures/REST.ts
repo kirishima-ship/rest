@@ -62,7 +62,11 @@ export class REST {
 		const { query } = options;
 		return this.get<LoadTrackResponse>(
 			Routes.loadTracks(
-				this.isUrl(options.query) ? encodeURIComponent(query) : query.includes(":") ? query : `${encodeURIComponent(`${this.resolveIdentifier(source)}:${query}`)}`
+				this.isUrl(options.query)
+					? encodeURIComponent(query)
+					: query.includes(':')
+					? query
+					: `${encodeURIComponent(`${this.resolveIdentifier(source)}:${query}`)}`
 			)
 		);
 	}
