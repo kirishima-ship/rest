@@ -1,7 +1,7 @@
 import { REST } from "../src/index";
 import { LoadTypeEnum } from "lavalink-api-types";
 
-const rest = new REST("https://lavalink.oops.wtf:443", { Authorization: "www.freelavalink.ga" });
+const rest = new REST("https://lava1.horizxon.tech:443", { Authorization: "horizxon.tech" });
 
 jest.setTimeout(30000);
 
