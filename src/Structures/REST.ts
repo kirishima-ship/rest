@@ -3,7 +3,7 @@ import { AsyncQueue } from '@sapphire/async-queue';
 import type { RoutePlannerStatusResponse, LoadTrackResponse, LavalinkTrack, LavalinkSource } from 'lavalink-api-types';
 import { LavalinkSourceEnum, LavalinkSearchIdentifierEnum, Routes } from 'lavalink-api-types';
 import type { RequestInit } from 'undici';
-import { join } from "path";
+import { join } from 'path';
 
 export class REST {
 	public headers: { [key: string]: string } = {};
