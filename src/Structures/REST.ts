@@ -3,6 +3,7 @@ import { AsyncQueue } from '@sapphire/async-queue';
 import type { RoutePlannerStatusResponse, LoadTrackResponse, LavalinkTrack, LavalinkSource } from 'lavalink-api-types';
 import { LavalinkSourceEnum, LavalinkSearchIdentifierEnum, Routes } from 'lavalink-api-types';
 import type { RequestInit } from 'undici';
+import { join } from "path";
 
 export class REST {
 	public headers: { [key: string]: string } = {};
@@ -87,7 +88,7 @@ export class REST {
 	public async get<T>(route: string, init?: RequestInit | undefined): Promise<T> {
 		await this.queue.wait();
 		try {
-			return fetch(new URL(route, this.url), { headers: this.headers, ...init }, FetchResultTypes.JSON);
+			return fetch(new URL(join(this.url, route)), { headers: this.headers, ...init }, FetchResultTypes.JSON);
 		} finally {
 			this.queue.shift();
 		}
@@ -96,7 +97,7 @@ export class REST {
 	public async post<T>(route: string, init?: RequestInit | undefined): Promise<T> {
 		await this.queue.wait();
 		try {
-			return fetch(new URL(route, this.url), { headers: this.headers, method: 'POST', ...init }, FetchResultTypes.JSON);
+			return fetch(new URL(join(this.url, route)), { headers: this.headers, method: 'POST', ...init }, FetchResultTypes.JSON);
 		} finally {
 			this.queue.shift();
 		}
