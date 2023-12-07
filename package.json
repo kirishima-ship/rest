@@ -51,7 +51,7 @@
     "@kirishima/fetch": "^0.3.3",
     "@sapphire/async-queue": "^1.5.0",
     "gen-esm-wrapper": "^1.1.3",
-    "lavalink-api-types": "^1.1.5",
+    "lavalink-api-types": "^2.0.2",
     "tslib": "^2.6.2",
     "undici": "^5.28.2"
   }
