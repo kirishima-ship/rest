@@ -34,9 +34,9 @@
   "devDependencies": {
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-typescript": "^7.23.3",
-    "@sapphire/eslint-config": "4.4.3",
-    "@sapphire/prettier-config": "1.4.5",
-    "@sapphire/ts-config": "3.3.4",
+    "@sapphire/eslint-config": "5.0.5",
+    "@sapphire/prettier-config": "2.0.0",
+    "@sapphire/ts-config": "5.0.1",
     "@types/jest": "^28.1.8",
     "eslint": "8.55.0",
     "jest": "^28.1.3",
